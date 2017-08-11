@@ -13,6 +13,8 @@ define(function(require, module, exports) {
             // Get the name from the options (optional)
             var name = options.name;
 
+            var teste = "teste.teste";
+
             // Mark this plugin as a base class
             plugin.baseclass();
 
