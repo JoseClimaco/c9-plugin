@@ -1,1 +1,3 @@
-var init = "iniciar";
+var plugin = function() {
+    return true;
+};
