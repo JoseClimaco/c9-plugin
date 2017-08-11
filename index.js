@@ -1,21 +1,34 @@
-define(function(require, exports, module) {
-    main.consumes = ["dependency"];
-    main.provides = ["c9-plugin"];
+define(function(require, module, exports) {
+    main.consumes = ["Plugin", "ui"];
+    main.provides = ["MyBaseClass"];
     return main;
 
     function main(options, imports, register) {
-        var dependency = imports.dependency;
+        var ui = imports.ui;
 
-        var plugin = new Plugin("c9-plugin", main.consumes);
+        function MyBaseClass(developer, deps, options) {
+            var plugin = new Plugin(developer, deps.concat(main.consumes));
+            var emit = plugin.getEmitter();
 
-        function doSomething(){}
+            // Get the name from the options (optional)
+            var name = options.name;
 
-        plugin.pluginAPI({
-            doSomething : doSomething
-        });
+            // Mark this plugin as a base class
+            plugin.baseclass();
 
-        register("", {
-            "c9-plugin": plugin
+            // Set the public API (Plugin won't be frozen)
+            plugin.freezePublicAPI({
+
+            });
+
+            // Set default name (will append integer)
+            plugin.load(name, "myclass");
+
+            return plugin;
+        }
+
+        register(null, {
+            MyBaseClass: MyBaseClass
         });
     }
 });
